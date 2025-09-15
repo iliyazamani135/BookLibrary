@@ -5,5 +5,6 @@
         Task AddAsync(Book book);
         Task<Book?> GetById(int id);
         Task<List<Book?>> GetAllAsync();
+        Task GetByIdAsync(int bookId);
     }
 }
