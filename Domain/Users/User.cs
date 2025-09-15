@@ -2,16 +2,16 @@
 
 namespace Domain.Users
 {
-    public sealed class User : EntityBase
+    public class User : EntityBase
     {
-        public string Name { get; private set; }
-        public string Lastname { get; private set; }
+        public string FirstName { get; private set; }
+        public string LastName { get; private set; }
         public string Email { get; private set; }
 
-        public User(string name, string lastname, string email)
+        public User(string firstName, string lastName, string email)
         {
-            Name = name;
-            Lastname = lastname;
+            FirstName = firstName;
+            LastName = lastName;
             Email = email;
         }
     }

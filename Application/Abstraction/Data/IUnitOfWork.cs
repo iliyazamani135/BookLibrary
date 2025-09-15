@@ -1,4 +1,5 @@
-﻿public interface IUnitOfWork
+﻿namespace Data;
+public interface IUnitOfWork
 {
     Task CommitAsync();
 }
