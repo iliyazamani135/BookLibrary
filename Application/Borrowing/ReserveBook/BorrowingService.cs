@@ -1,6 +1,6 @@
 ﻿using Domain.Borrowings;
 using Domain.Book;
-using Data;
+using Application.Abstractions;
 
 public class BorrowingService : IBorrowingService
 {
@@ -8,14 +8,18 @@ public class BorrowingService : IBorrowingService
     private readonly IBookRepository _bookRepository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public BorrowingService(IBorrowingRepository borrowingRepository, IBookRepository bookRepository, IUnitOfWork unitOfWork)
+    public BorrowingService(
+        IBorrowingRepository borrowingRepository,
+        IBookRepository bookRepository,
+        IUnitOfWork unitOfWork)
     {
         _borrowingRepository = borrowingRepository;
         _bookRepository = bookRepository;
         _unitOfWork = unitOfWork;
     }
 
-    public async Task ReserveBookAsync(int bookId, int userId, DateTime start, DateTime end)
+    
+    public async Task ReserveBookAsync(Guid bookId, Guid userId, DateTime start, DateTime end)
     {
         var book = await _bookRepository.GetByIdAsync(bookId);
         if (book == null || !book.IsAvailable)
@@ -23,11 +27,12 @@ public class BorrowingService : IBorrowingService
 
         var borrowing = new Borrowing(bookId, userId, new DateRange(start, end));
         await _borrowingRepository.AddAsync(borrowing);
+
         book.Borrow();
-        await _unitOfWork.CommitAsync();
+        await _unitOfWork.SaveChangesAsync();
     }
 
-    public async Task<List<Borrowing>> GetUserBorrowingsAsync(int userId)
+    public async Task<List<Borrowing>> GetUserBorrowingsAsync(Guid userId)
     {
         return await _borrowingRepository.GetUserBorrowingsAsync(userId);
     }

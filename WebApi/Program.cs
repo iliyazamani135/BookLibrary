@@ -2,15 +2,13 @@ using Application;
 using Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ------------------ Services ------------------
-
-// Add controllers
 builder.Services.AddControllers();
 
-// Swagger/OpenAPI
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -21,27 +19,20 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-// Application & Infrastructure DI
-builder.Services.AddApplication(); 
-builder.Services.AddInfrastructure(builder.Configuration.GetConnectionString("DefaultConnection")!);
+builder.Services.AddApplication();
+builder.Services.AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 
-// ------------------ Middlewares ------------------
+app.UseSwagger();
 
-if (app.Environment.IsDevelopment())
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Library API V1");
-    });
-}
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Library API V1");
+    c.RoutePrefix = string.Empty;
+});
 
 app.UseHttpsRedirection();
-
-// Map controllers
 app.MapControllers();
 
-// Run the app
 app.Run();

@@ -1,4 +1,5 @@
-﻿using Domain.Users;
+﻿using Application.Abstractions.Repositories;
+using Domain.Users;
 
 
 public class UserService : IUserService

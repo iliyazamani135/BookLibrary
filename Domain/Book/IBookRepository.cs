@@ -1,10 +1,10 @@
-﻿namespace Domain.Book
+﻿using Domain.Book;
+
+public interface IBookRepository
 {
-    public interface IBookRepository
-    {
-        Task AddAsync(Book book);
-        Task<Book?> GetById(int id);
-        Task<List<Book?>> GetAllAsync();
-        Task GetByIdAsync(int bookId);
-    }
+    Task<Book?> GetByIdAsync(Guid id);
+    Task<List<Book>> GetAllAsync();
+    Task AddAsync(Book book);
+    Task UpdateAsync(Book book);
+    Task DeleteAsync(Book book);
 }

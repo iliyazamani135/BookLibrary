@@ -1,4 +1,4 @@
-using Application.User.CreateUser;
+using Application.Users;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

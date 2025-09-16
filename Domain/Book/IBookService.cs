@@ -1,8 +1,12 @@
 ﻿using Domain.Book;
+using System;
+using System.Threading.Tasks;
 
 public interface IBookService
 {
-    Task<Book?> GetByIdAsync(int id);
+    Task<Book?> GetByIdAsync(Guid id);
     Task<List<Book>> GetAllAsync();
-    Task ReserveBookAsync(int bookId, int userId);
+    Task AddBookAsync(Book book);
+    Task UpdateBookAsync(Book book);
+    Task DeleteBookAsync(Book book);
 }

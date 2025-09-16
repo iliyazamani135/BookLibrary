@@ -1,5 +1,9 @@
-﻿namespace Data;
-public interface IUnitOfWork
+﻿using System.Threading.Tasks;
+
+namespace Application.Abstractions
 {
-    Task CommitAsync();
+    public interface IUnitOfWork
+    {
+        Task<int> SaveChangesAsync();
+    }
 }

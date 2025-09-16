@@ -1,23 +1,24 @@
-﻿using Domain.Apartments;
-using Domain.Users;
-using Domain.Bookings;
+﻿using Domain.Users;
+using Domain.Book;
+using Domain.Borrowings;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Reflection.Emit;
 
 namespace Infrastructure.Data;
 
 public class ApplicationDbContext : DbContext
 {
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        : base(options) { }
 
-    public DbSet<Apartment> Apartments { get; set; }
+    // DbSets
     public DbSet<User> Users { get; set; }
-    public DbSet<Booking> Bookings { get; set; }
+    public DbSet<Book> Books { get; set; }          
+    public DbSet<Borrowing> Borrowings { get; set; } 
     public DbSet<Review> Reviews { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
     }
 }

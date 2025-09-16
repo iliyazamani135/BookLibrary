@@ -1,4 +1,5 @@
-﻿using Domain.Book;
+﻿using Application.Abstractions.Messaging;
+using Domain.Book;
 using Microsoft.Extensions.DependencyInjection;
 
 public static class DependencyInjection

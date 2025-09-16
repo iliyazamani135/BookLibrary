@@ -1,4 +1,4 @@
-﻿using Data;
+﻿using Application.Abstractions;
 using Domain.Book;
 using Domain.Borrowings;
 
@@ -27,14 +27,9 @@ public class ReserveBookCommandHandler : ICommandHandler<ReserveBookCommand>
         var borrowPeriod = new DateRange(command.Start, command.End);
         var borrowing = new Borrowing(command.BookId, command.UserId, borrowPeriod);
 
-      
         await _borrowingRepository.AddAsync(borrowing);
         book.Borrow();
 
-        await _unitOfWork.CommitAsync();
+        await _unitOfWork.SaveChangesAsync();
     }
-
-
-
 }
-

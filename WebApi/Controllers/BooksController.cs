@@ -1,6 +1,4 @@
-﻿using Application.Books.AddBook;
-using Application.Books.SearchBooks;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Controllers

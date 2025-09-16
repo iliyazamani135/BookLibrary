@@ -10,18 +10,14 @@ namespace WebApi.Controllers
     {
         private readonly IMediator _mediator;
 
+        
         public BookingsController(IMediator mediator)
         {
             _mediator = mediator;
         }
 
-        public IMediator Get_mediator()
-        {
-            return _mediator;
-        }
-
         [HttpPost("reserve")]
-        public async Task<IActionResult> Reserve([FromBody] ReserveBookCommand command, IMediator _mediator)
+        public async Task<IActionResult> Reserve([FromBody] ReserveBookCommand command)
         {
             var result = await _mediator.Send(command);
             return Ok(result);

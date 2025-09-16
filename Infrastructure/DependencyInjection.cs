@@ -1,44 +1,31 @@
-﻿using Application.Abstractions.Clock;
-using Application.Abstractions.Email;
-using Application.Abstractions.Data;
-using Domain.Users;
-using Domain.Book;
-using Infrastructure.Clock;
+﻿using Application.Abstractions;
+using Application.Abstractions.Repositories;
+using Domain.Borrowings;
 using Infrastructure.Data;
-using Infrastructure.Email;
 using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Dapper;
 
-
-
-namespace Infrastructure;
-
-public static class DependencyInjection
+namespace Infrastructure
 {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services, string connectionString)
+    public static class DependencyInjection
     {
-        
-        services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(connectionString));
+        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+        {
+            // DbContext
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
-        
-        SqlMapper.AddTypeHandler(new DateOnlyTypeHandler());
+            // UnitOfWork
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-        
-        services.AddSingleton(new SqlConnectionFactory(connectionString));
+            // Repositories
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IBookRepository, BookRepository>();
+            services.AddScoped<IBorrowingRepository, BorrowingRepository>();
 
-        
-        services.AddScoped<IUserRepository, UserRepository>();
-        services.AddScoped<IBookingRepository, BookingRepository>();
-
-        
-        services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
-
-        
-        services.AddScoped<IEmailService, EmailService>();
-
-        return services;
+            return services;
+        }
     }
 }

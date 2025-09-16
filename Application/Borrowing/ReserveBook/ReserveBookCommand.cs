@@ -2,12 +2,12 @@
 
 public sealed class ReserveBookCommand : ICommand
 {
-    public int BookId { get; }
-    public int UserId { get; }
+    public Guid BookId { get; }
+    public Guid UserId { get; }
     public DateTime Start { get; }
     public DateTime End { get; }
 
-    public ReserveBookCommand(int bookId, int userId, DateTime start, DateTime end)
+    public ReserveBookCommand(Guid bookId, Guid userId, DateTime start, DateTime end)
     {
         BookId = bookId;
         UserId = userId;

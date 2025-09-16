@@ -1,9 +1,9 @@
-﻿using Domain.Bookings;
-using Infrastructure.Data;
+﻿using Domain.Borrowings;
+//using Infrastructure.Data;
 
-namespace Infrastructure.Repositories;
+//namespace Infrastructure.Repositories;
 
-public class BookingRepository : Repository<Booking>, IBookingRepository
-{
-    public BookingRepository(ApplicationDbContext context) : base(context) { }
-}
+//public class BorrowingRepository : Repository<Borrowing>, IBorrowingRepository
+//{
+//    public BorrowingRepository(ApplicationDbContext context) : base(context) { }
+//}
